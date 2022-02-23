@@ -1,0 +1,33 @@
+F 5 10.00 Oracle Developer/2000
+N 3 9.50 Database Design
+F 4 4.80 Building a Data Warehouse
+S 2 15.25 Teaching Science
+N 6 13.95 IIS Made Easy
+N 4 17.99 Drive Image
+N 5 21.47 Probability and Statistics
+S 3 15.63 Calculus with Physics
+S 5 19.07 Calculus with Materials
+F 8 15.23 Turbo C For Fun and Profit
+S 6 17.25 AutoVision
+F 5 18.25 Double Vision
+N 2 3.95 WinQSB
+F 3 5.95 Pascal Rules
+F 1 17.95 Turbo Prolog For Beginners
+F 4 15.38 Cutthroat Teammates
+S 2 12.00 Schaum's Simple Programming
+N 3 16.54 Manufacturing Processes
+N 4 21.27 Teach Yourself CIM
+F 5 17.85 Process Quality
+S 6 12.95 Repairing Computers
+F 3 15.35 Management Made Hard
+F 4 25.32 Kettering's New Quality
+S 6 21.00 Software Engineering
+F 5 15.85 Operations Research
+F 6 13.25 Building The Box
+S 5 17.25 Design By IDEF
+S 4 16.25 Excel For Dummies
+N 5 17.58 Data File Design
+F 6 15.47 Diskettes And You
+S 7 12.32 Chaos Theory Made Easy
+F 8 15.23 No More Homework
+N 6 23.23 Runtime Errors Solved
