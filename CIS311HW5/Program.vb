@@ -69,6 +69,10 @@ Module Program
         '- Local Variable Dictionary (alphabetically):                          -
         '- None                                                                 -
         '------------------------------------------------------------------------
+        'change the color of the console
+        Console.BackgroundColor = ConsoleColor.White
+        Console.ForegroundColor = ConsoleColor.Black
+        Console.Clear()
         'This program flow should fix the issue I had with assignment 3 the input procedure would
         'iterate until a good path was given by the user. If the file is not correct then the program
         'will halt execution after writing the end of execution method
@@ -118,12 +122,7 @@ Module Program
         strBookPath = Console.ReadLine
         'see if file exists, if it does return true
         If System.IO.File.Exists(strBookPath) Then
-            If strBookPath.Contains(".txt") Then
-                Return True
-            Else
-                Console.WriteLine("The file path/name provided was not for a .txt file. Please enter the path and name of a .txt file.")
-                Return False
-            End If
+            Return True
         Else
             Console.WriteLine("No such file found, check file path/name.")
             Return False
@@ -187,52 +186,56 @@ Module Program
                 If strLine.Count > 3 Then
                     'for the purpose of this program I will assume that the category will only be F N or S
                     '***************************
-                    'If strLine.Equals("S" Or "N" Or "F") Then
-                    strCategory = strLine(0)
+                    If strLine(0).Equals("S") Or strLine(0).Equals("N") Or strLine(0).Equals("F") Then
+                        strCategory = strLine(0)
+                    Else
+                        Console.WriteLine(String.Format("First argument of line {0} must be either N, S or F.", intLoopCount))
+                        blnContinue = False
+                    End If
                     'use regex to make sure that the second argument of the line is only an integer
                     If Regex.IsMatch(strLine(1), "[0-9]+") Then
-                        intQuantity = CInt(strLine(1))
-                    Else
-                        blnContinue = False
-                        Console.WriteLine(String.Format("Second argument of line {0} must be an integer.", intLoopCount))
-                    End If
+                            intQuantity = CInt(strLine(1))
+                        Else
+                            blnContinue = False
+                            Console.WriteLine(String.Format("Second argument of line {0} must be an integer.", intLoopCount))
+                        End If
                     'use regex to see if third argument is only a decimal or, an integer (if int it will be cast to a single properly)
-                    If Regex.IsMatch(strLine(2), "[0-9]+\.?[0-9]") And blnContinue Then
+                    If Regex.IsMatch(strLine(2), "[0-9]+\.?[0-9]") Then
                         sngPrice = CSng(strLine(2))
                     Else
                         blnContinue = False
-                        Console.WriteLine(String.Format("Thrid argument of line {0} must be a decimal number or integer.", intLoopCount))
-                    End If
-                    'reset strTitle to empty string so that the title does not contain the past title as well
-                    strTitle = ""
-                    If blnContinue Then
-                        'loop through all the remainder of the string to get the title
-                        For i As Integer = 3 To strLine.Count - 1
-                            'avoid adding an extra space at the end of the title
-                            If (i = strLine.Count - 1) Then
-                                'here we just dont put a space at the end
-                                strTitle = strTitle & strLine(i).Trim
+                            Console.WriteLine(String.Format("Thrid argument of line {0} must be a decimal number or integer.", intLoopCount))
+                        End If
+                        'reset strTitle to empty string so that the title does not contain the past title as well
+                        strTitle = ""
+                        If blnContinue Then
+                            'loop through all the remainder of the string to get the title
+                            For i As Integer = 3 To strLine.Count - 1
+                                'avoid adding an extra space at the end of the title
+                                If (i = strLine.Count - 1) Then
+                                    'here we just dont put a space at the end
+                                    strTitle = strTitle & strLine(i).Trim
+                                Else
+                                    strTitle = strTitle & strLine(i).Trim & " "
+                                End If
+                            Next
+                        End If
+                        If blnContinue Then
+                            'check to see that at least 1 character was in the book title
+                            If Regex.IsMatch(strTitle, "[ a-zA-Z0-9]+") Then
+
+                                'add to the list
+                                myBooks.Add(New clsBook(strCategory, intQuantity, sngPrice, strTitle, CSng(intQuantity * sngPrice)))
+
                             Else
-                                strTitle = strTitle & strLine(i).Trim & " "
+                                Console.WriteLine(String.Format("Fourth argument of line {0} must contain the title of the book, but is currently nothing.", intLoopCount))
                             End If
-                        Next
-                    End If
-                    If blnContinue Then
-                        'check to see that at least 1 character was in the book title
-                        If Regex.IsMatch(strTitle, "[ a-zA-Z0-9]+") Then
-
-                            'add to the list
-                            myBooks.Add(New clsBook(strCategory, intQuantity, sngPrice, strTitle, CSng(intQuantity * sngPrice)))
-
                         Else
-                            Console.WriteLine(String.Format("Fourth argument of line {0} must contain the title of the book, but is currently nothing.", intLoopCount))
+                            Console.WriteLine(String.Format("Book from line {0} was not added to the report.", intLoopCount))
                         End If
                     Else
-                        Console.WriteLine(String.Format("Book from line {0} was not added to the report.", intLoopCount))
-                    End If
-                Else
-                    'here we print a message noting which line did not have enough entries in it
-                    Console.WriteLine(String.Format("Line {0} of file did not contain enough arguments to make a complete book entry, book not added.", intLoopCount))
+                        'here we print a message noting which line did not have enough entries in it
+                        Console.WriteLine(String.Format("Line {0} of file did not contain enough arguments to make a complete book entry, book not added.", intLoopCount))
                 End If
             End While
         End Using
